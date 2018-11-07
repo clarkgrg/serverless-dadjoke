@@ -1,0 +1,19 @@
+# Twitter dadjoke Bot
+# #noServerNovember
+
+service: dadjoke 
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: us-east-1
+
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+functions:
+  dadjoke:
+    handler: handler.dadjoke
+
