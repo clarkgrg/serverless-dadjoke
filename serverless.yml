@@ -9,11 +9,9 @@ provider:
   stage: dev
   region: us-east-1
 
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
-
 functions:
   dadjoke:
     handler: handler.dadjoke
+    events:
+      - schedule: rate(12 hours)
 

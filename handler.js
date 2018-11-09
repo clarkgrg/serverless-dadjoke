@@ -3,18 +3,22 @@ const Twitter = require('twitter');
 const config = require('./config');
 const { fetchJoke } = require('./libs/fetch');
 
+// Initialize Twitter
 var T = new Twitter(config);
 
-const Tweet = async (joke) => {
+// Send a tweet
+const sendTweet = async (joke) => {
   let tweet = await T.post('statuses/update', { status: joke });
-  console.log(tweet);
   return tweet;
 }
 
+// Fetch and Tweet Dad Joke 
+// Make the kids proud
 module.exports.dadjoke = async (event, context) => {
+  let joke='';
   try {
-    const dadjoke = await fetchJoke();
-    const tweet = Tweet(dadjoke);
+    joke = await fetchJoke();
+    const tweet = await sendTweet(joke);
     console.log(tweet); 
   } catch(err) {
     console.log(err);
@@ -23,10 +27,7 @@ module.exports.dadjoke = async (event, context) => {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: dadjoke
+      message: joke
     }),
   };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
 };
